@@ -30,3 +30,15 @@ end user input).
 -I then apply a weighting to the scores and it outputs a ranked list based on probability that includes the entire citation and hyperlink to paper.
 
 
+## Questions
+- Why use Selenium -> screenshot -> OCR, rather than text retrieval from the PubMed APIs?
+- Did you consider using a database (SQL) or search index system (Elasticsearch)? 
+- Did you run into any challenges or limitations with using the PubMed APIs? (Some of their guidelines seem fairly restrictive, see https://www.ncbi.nlm.nih.gov/pmc/tools/oai/)
+
+## TODO
+- [ ] Python packaging best practices: dependency lists, installation instructions
+- [ ] Standardize data formats (use well-formed CSV, JSON, data structures, rather than ad-hoc text files)
+- [ ] Data pipeline documentation
+- [ ] Automate data pipelines to run on a schedule or prompted by user input
+
+

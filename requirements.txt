@@ -4,4 +4,4 @@ pandas
 pymed
 pytesseract
 selenium
-scikit-learn
+scikit-image

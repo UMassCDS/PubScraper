@@ -60,6 +60,7 @@ $ grep -in "open(" *.py
 ```
 4. Made some notes in code or and minor code improvements. 
  - don't need f.close() if you're using the file 'with open(...)` convention
+ - Ruff linter suggestions (remove unused imports, bare exceptions)
 
 
 ## Questions

@@ -253,10 +253,15 @@ with open("data.txt", "r") as f:
 
 daterange = startdate + ":" + enddate
 print("DATE: ", daterange)
+
+# TODO Probably urllib.parse should be used here instead of regex -VP
+# >>> re.sub("[^0-9a-zA-Z]+", "+", "University of Massachusetts")
+#'University+of+Massachusetts'
 affiliation = re.sub("[^0-9a-zA-Z]+", "+", affiliation)
 print("AFFL: ", affiliation)
 search_query = f"{affiliation}+[ad]+{town}+[ad]+{daterange}+[dp]"
 print("SRCH: ", search_query)
+# This is only searching for the last affiliation that appeared in the last row of the CSV file. Is that intentional? -VP
 candidates, candidates_doi, no_of_candidates = search(search_query, 100000)
 start = 1
 end = no_of_candidates

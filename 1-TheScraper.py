@@ -202,12 +202,20 @@ def generate_citation(candidates, doi):
     citation = f"{citation[:-2]} {info['title']} {info['journal']}. {info['publication_date'].strftime('%Y')}. https://doi.org/{doi}.\n"
     return citation, author, auths
 
-open("annual.txt", "w").close() #this will store all of the manscrupts for each year
+
+#### MAIN CODE STARTS HERE
+
+# TODO If this is just here to create the file, it's not really necessary. It will overwrite any existing annual.txt file with an empty file, which could be bad.  -VP
+open("annual.txt", "w").close() #this will store all of the manscrupts for each year 
+
+# Makes the output folder structure, removing any existing folders and all their contents -VP
 folder_names = ["img_results", "text_results", "screenshots"]
 for folder_name in folder_names:
     if os.path.exists(folder_name):
         shutil.rmtree(folder_name)
     os.mkdir(folder_name)
+
+
 
 with open('data.txt', "r") as f:  #this file should be created from a webform or manually - csv file with needed info (but also some leftover junk that can be pruned)
     reader = csv.reader(f, delimiter= '|')
@@ -221,9 +229,12 @@ with open('data.txt', "r") as f:  #this file should be created from a webform or
       startdate=(row[6])
       enddate=(row[7])
       reqterms=(row[8])
+
+# The terms variable is unused, so this block can be removed -VP
 with open('data.txt', "r") as f:
     reader = csv.reader(f, delimiter= '|')
     terms = list(reader)
+
 daterange=(startdate +":"+ enddate)
 print("DATE: ", daterange)
 affiliation=re.sub('[^0-9a-zA-Z]+', '+', affiliation)
@@ -246,7 +257,6 @@ for i in range(start - 1, end):
             print("SHORTY")
             with open("annual.txt", "a") as f:
                 f.write(f"{i}|shorty-download|{a1}")
-            f.close()
             print("Transcribing now...")
             generateText(i)
             path = os.getcwd()
@@ -255,7 +265,6 @@ for i in range(start - 1, end):
             print("GOOD ONE")
             with open("annual.txt", "a") as f:
                 f.write(f"{i}|sucess-download|{a1}")
-            f.close()
             print("Transcribing now...")
             generateText(i)
             path = os.getcwd()
@@ -264,4 +273,3 @@ for i in range(start - 1, end):
         print("ERROR")
         with open("annual.txt", "a") as f:
             f.write(f"{i}|failed-download|{a1}")
-        f.close()

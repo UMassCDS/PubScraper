@@ -1,0 +1,7 @@
+imutils
+opencv-python
+pandas
+pymed
+pytesseract
+selenium
+scikit-learn

@@ -78,13 +78,129 @@ $ grep -in "open(" *.py
  - Ruff linter suggestions (remove unused imports, bare exceptions)
 5. Hard coded dates, affiliation and town and rand the scraper as follows:
 ```
+$ python 1-TheScraper.py 
+DATE:  2024-05-01:2024-06-01
+AFFL:  University+of+Massachusetts+Amherst
+SRCH:  University+of+Massachusetts+Amherst+[ad]+Amherst+[ad]+2024-05-01:2024-06-01+[dp]
+FND#:  24
+Downloading 1 of 25
+GOOD ONE
+Transcribing now...
+Downloading 2 of 25
+SHORTY
+Transcribing now...
+Downloading 3 of 25
+SHORTY
+Transcribing now...
+Downloading 4 of 25
+GOOD ONE
+Transcribing now...
+Downloading 5 of 25
+GOOD ONE
+Transcribing now...
+Downloading 6 of 25
+ERROR Message: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=128.0.6613.138)
+Stacktrace:
+0   chromedriver                        0x0000000100be1208 cxxbridge1$str$ptr + 1927396
+1   chromedriver                        0x0000000100bd966c cxxbridge1$str$ptr + 1895752
+2   chromedriver                        0x00000001007d4808 cxxbridge1$string$len + 89564
+3   chromedriver                        0x00000001007afb0c core::str::slice_error_fail::h6c488016ada29016 + 3776
+4   chromedriver                        0x000000010083f4d8 cxxbridge1$string$len + 527020
+5   chromedriver                        0x0000000100851c90 cxxbridge1$string$len + 602724
+6   chromedriver                        0x000000010080d698 cxxbridge1$string$len + 322668
+7   chromedriver                        0x000000010080e310 cxxbridge1$string$len + 325860
+8   chromedriver                        0x0000000100ba7e78 cxxbridge1$str$ptr + 1693012
+9   chromedriver                        0x0000000100bac77c cxxbridge1$str$ptr + 1711704
+10  chromedriver                        0x0000000100b8d3ec cxxbridge1$str$ptr + 1583816
+11  chromedriver                        0x0000000100bad04c cxxbridge1$str$ptr + 1713960
+12  chromedriver                        0x0000000100b7dfc8 cxxbridge1$str$ptr + 1521316
+13  chromedriver                        0x0000000100bcab68 cxxbridge1$str$ptr + 1835588
+14  chromedriver                        0x0000000100bcace4 cxxbridge1$str$ptr + 1835968
+15  chromedriver                        0x0000000100bd9308 cxxbridge1$str$ptr + 1894884
+16  libsystem_pthread.dylib             0x0000000180885f94 _pthread_start + 136
+17  libsystem_pthread.dylib             0x0000000180880d34 thread_start + 8
 
+Downloading 7 of 25
+GOOD ONE
+Transcribing now...
+Downloading 8 of 25
+GOOD ONE
+Transcribing now...
+Downloading 9 of 25
+GOOD ONE
+Transcribing now...
+Downloading 10 of 25
+ERROR Message: disconnected: not connected to DevTools # I think my computer went to sleep -VP
+  (failed to check if window was closed: disconnected: not connected to DevTools)
+  (Session info: chrome=128.0.6613.138)
+Stacktrace:
+0   chromedriver                        0x0000000104b81208 cxxbridge1$str$ptr + 1927396
+1   chromedriver                        0x0000000104b7966c cxxbridge1$str$ptr + 1895752
+2   chromedriver                        0x0000000104774808 cxxbridge1$string$len + 89564
+3   chromedriver                        0x000000010475e658 core::str::slice_error_fail::h6c488016ada29016 + 64012
+4   chromedriver                        0x000000010475e598 core::str::slice_error_fail::h6c488016ada29016 + 63820
+5   chromedriver                        0x00000001047f1cac cxxbridge1$string$len + 602752
+6   chromedriver                        0x00000001047ad698 cxxbridge1$string$len + 322668
+7   chromedriver                        0x00000001047ae310 cxxbridge1$string$len + 325860
+8   chromedriver                        0x0000000104b47e78 cxxbridge1$str$ptr + 1693012
+9   chromedriver                        0x0000000104b4c77c cxxbridge1$str$ptr + 1711704
+10  chromedriver                        0x0000000104b2d3ec cxxbridge1$str$ptr + 1583816
+11  chromedriver                        0x0000000104b4d04c cxxbridge1$str$ptr + 1713960
+12  chromedriver                        0x0000000104b1dfc8 cxxbridge1$str$ptr + 1521316
+13  chromedriver                        0x0000000104b6ab68 cxxbridge1$str$ptr + 1835588
+14  chromedriver                        0x0000000104b6ace4 cxxbridge1$str$ptr + 1835968
+15  chromedriver                        0x0000000104b79308 cxxbridge1$str$ptr + 1894884
+16  libsystem_pthread.dylib             0x0000000180885f94 _pthread_start + 136
+17  libsystem_pthread.dylib             0x0000000180880d34 thread_start + 8
+
+Downloading 11 of 25
+GOOD ONE
+Transcribing now...
+Downloading 12 of 25
+GOOD ONE
+Transcribing now...
+Downloading 13 of 25
+GOOD ONE
+Transcribing now...
+Downloading 14 of 25
+GOOD ONE
+Transcribing now...
+Downloading 15 of 25
+GOOD ONE
+Transcribing now...
+Downloading 16 of 25
+GOOD ONE
+Transcribing now...
+Downloading 17 of 25
+GOOD ONE
+Transcribing now...
+Downloading 18 of 25
+GOOD ONE
+Transcribing now...
+Downloading 19 of 25
+GOOD ONE
+Transcribing now...
+Downloading 20 of 25
+GOOD ONE
+Transcribing now...
+Downloading 21 of 25
+GOOD ONE
+Transcribing now...
+Downloading 22 of 25
+GOOD ONE
+Transcribing now...
+Downloading 23 of 25
+SHORTY
+Transcribing now...
+Downloading 24 of 25
+GOOD ONE
+Transcribing now...
 ```
 
+## Searcher Notes
 
-
- ## Additional observations
- - You can use the advanced search options on https://pubmed.ncbi.nlm.nih.gov/advanced/ to build queries. For example, search for "Affiliation=University of Massachusetts Amherst" With a publication date of 6/1/2023-6/1/2024 gives `https://pubmed.ncbi.nlm.nih.gov/?term=%28%28%222023%2F06%2F01%22%5BDate+-+Publication%5D+%3A+%222024%2F06%2F01%22%5BDate+-+Publication%5D%29%29+AND+%28University+of+Massachusetts+Amherst%5BAffiliation%5D%29&sort=`. This is useful for testing, especially since the API isn't well documented. You can use a tool like https://text.makeup to decode the URL string to be more readable and the python urlparse library to encode. 
 
 
 ## Questions
@@ -93,8 +209,14 @@ $ grep -in "open(" *.py
 - Did you run into any challenges or limitations with using the PubMed APIs? (Some of their guidelines seem fairly restrictive, see https://www.ncbi.nlm.nih.gov/pmc/tools/oai/)
 - Why is the data.txt input to the TheScraper.py generated manually? What did does it contain and how does that data contribute to the rest of the scraper's behaviour? Why does the code read the whole file but only use the last line for creating the query?
 - How certain are we about the search query formulation? Is it getting the results that you want? What is "town" providing in the search query string? Actually trying out the query on https://pubmed.ncbi.nlm.nih.gov/advanced/ would be helpful. 
-- Key terms: Why not use the [MeSH](https://www.nlm.nih.gov/mesh/meshhome.html) terms from each PubMed paper? 
-- What's the importance of obtaining the full text? Scraping screenshots to OCR seems more unreliable than trying to grab full text via HTML or even PDFs directly from PubMed when available. Many publishers (Wiley) are using the "Verify you are human" checkboxes or other pop ups that block scrapers
+    -  You can use the advanced search options on https://pubmed.ncbi.nlm.nih.gov/advanced/ to build queries. For example, search for "Affiliation=University of Massachusetts Amherst" With a publication date of 6/1/2023-6/1/2024 gives `https://pubmed.ncbi.nlm.nih.gov/?term=%28%28%222023%2F06%2F01%22%5BDate+-+Publication%5D+%3A+%222024%2F06%2F01%22%5BDate+-+Publication%5D%29%29+AND+%28University+of+Massachusetts+Amherst%5BAffiliation%5D%29&sort=`. This is useful for testing, especially since the API isn't well documented. You can use a tool like https://text.makeup to decode the URL string to be more readable and the python urlparse library to encode. 
+- What's the importance of obtaining the full text? Scraping screenshots to OCR seems more unreliable than trying to grab full text via HTML or even PDFs directly from PubMed when available. Many publishers (Wiley) are using the "Verify you are human" checkboxes or other pop ups that block scrapers.
+- Keyword counting: 
+    - Since you're using the string.count(keyword) method for counting the number of times a term appears in a document, you'll count terms even when they're sub-parts of another word (e.g. "cat" will be counted even if only the word "category" appears in text). Do you want full word matches or 
+    - Why take a specific set of keywords as input? What happens if you want to add a new keyword later?
+    - Key terms: Why not use the [MeSH](https://www.nlm.nih.gov/mesh/meshhome.html) terms from each PubMed paper? 
+- Keyword scoring: 
+    - Why multiply by 100? 
 
 
 ## TODO
@@ -103,6 +225,7 @@ $ grep -in "open(" *.py
 - [ ] Standardize data formats (use well-formed CSV, JSON, data structures, rather than ad-hoc text files)
 - [ ] Data pipeline documentation
 - [ ] Automate data pipelines to run on a schedule or prompted by user input
-- [ ] Use headless browser so that you can use your computer while this thing is running
+- [ ] Use headless browser option in Selenium so that you can use your computer while this thing is running
+- [ ] Speed up processing code using pandas (and maybe dask) to work with dataframes (up-sides: multiprocessing, computational efficiency, more checks on data formatting, standardized CSV formats, downsides: future maintainers will need to know pandas)
 
 

@@ -281,18 +281,16 @@ enddate = "2024/06/01"
 affiliation = "University of Massachusetts Amherst"
 town = "Amherst"
 
-
 daterange = startdate + ":" + enddate
 print("DATE: ", daterange)
 
-# Note that I tried using the urllib.parse functionality to encode the url, but it doesn't work, so
-# >>> re.sub("[^0-9a-zA-Z]+", "+", "University of Massachusetts")
-#'University+of+Massachusetts'
-# affiliation = re.sub("[^0-9a-zA-Z]+", "+", affiliation)
+affiliation = re.sub("[^0-9a-zA-Z]+", "+", affiliation)
 print("AFFL: ", affiliation)
-# search_query = f"{affiliation}+[ad]+{town}+[ad]+{daterange}+[dp]"
-raw_query = f"({daterange}[DP])AND({affiliation}[AD])"
-search_query = re.sub(r"\s+", "+", raw_query)
+search_query = f"{affiliation}+[ad]+{town}+[ad]+{daterange}+[dp]"
+
+# Note that I tried using the urllib.parse functionality to encode the url, but it doesn't work. Next two lines are my suggested code changes. - VP
+# raw_query = f"({daterange}[DP])AND({affiliation}[AD])"
+# search_query = re.sub(r"\s+", "+", raw_query)
 
 
 print("SRCH: ", search_query)

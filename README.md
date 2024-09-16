@@ -76,6 +76,12 @@ $ grep -in "open(" *.py
 4. Made some notes in code or and minor code improvements. 
  - don't need f.close() if you're using the file 'with open(...)` convention
  - Ruff linter suggestions (remove unused imports, bare exceptions)
+5. Hard coded dates, affiliation and town and rand the scraper as follows:
+```
+
+```
+
+
 
  ## Additional observations
  - You can use the advanced search options on https://pubmed.ncbi.nlm.nih.gov/advanced/ to build queries. For example, search for "Affiliation=University of Massachusetts Amherst" With a publication date of 6/1/2023-6/1/2024 gives `https://pubmed.ncbi.nlm.nih.gov/?term=%28%28%222023%2F06%2F01%22%5BDate+-+Publication%5D+%3A+%222024%2F06%2F01%22%5BDate+-+Publication%5D%29%29+AND+%28University+of+Massachusetts+Amherst%5BAffiliation%5D%29&sort=`. This is useful for testing, especially since the API isn't well documented. You can use a tool like https://text.makeup to decode the URL string to be more readable and the python urlparse library to encode. 
@@ -88,6 +94,7 @@ $ grep -in "open(" *.py
 - Why is the data.txt input to the TheScraper.py generated manually? What did does it contain and how does that data contribute to the rest of the scraper's behaviour? Why does the code read the whole file but only use the last line for creating the query?
 - How certain are we about the search query formulation? Is it getting the results that you want? What is "town" providing in the search query string? Actually trying out the query on https://pubmed.ncbi.nlm.nih.gov/advanced/ would be helpful. 
 - Key terms: Why not use the [MeSH](https://www.nlm.nih.gov/mesh/meshhome.html) terms from each PubMed paper? 
+- What's the importance of obtaining the full text? Scraping screenshots to OCR seems more unreliable than trying to grab full text via HTML or even PDFs directly from PubMed when available. Many publishers (Wiley) are using the "Verify you are human" checkboxes or other pop ups that block scrapers
 
 
 ## TODO
@@ -96,5 +103,6 @@ $ grep -in "open(" *.py
 - [ ] Standardize data formats (use well-formed CSV, JSON, data structures, rather than ad-hoc text files)
 - [ ] Data pipeline documentation
 - [ ] Automate data pipelines to run on a schedule or prompted by user input
+- [ ] Use headless browser so that you can use your computer while this thing is running
 
 

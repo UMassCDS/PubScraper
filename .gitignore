@@ -1,0 +1,5 @@
+# Don't save outputs to git
+img_results
+screenshots
+text_results
+annual.txt

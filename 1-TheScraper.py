@@ -56,6 +56,16 @@ def search(search_term, max_result):
 
 # use selenium to visit doi.org website and grab snapshots as bot scrolls through manuscript
 def download(doi, name):
+    """Visit webpage at DOI, then scroll through the whole webpage, taking screenshots of each window.
+    Finally stich all screenshots together in a single image and save to the `name` filepath
+
+    Args:
+        doi (str): Webpage to scrape text from via screenshots
+        name (str): Path where final image will be saved
+
+    Returns:
+        None
+    """
     slpt1 = random.randrange(1, 5)
     slpt2 = random.randrange(2, 4)
 

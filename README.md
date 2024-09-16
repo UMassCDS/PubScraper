@@ -38,7 +38,8 @@
 
 ### Virginia follow up questions
 - Why not use Semantic Scholar's API as opposed to PubMed (difficult to use) or Google Scholar (paid/closed)? We can apply for access and see if it's approved.
-- What alternatives did you consider to OCRing the web pages? What about downloading PDFs or full-text from APIs? 
+- What value are the keywords adding to your analysis. Could we obtain the same value from MeSH keyword terms, summaries, etc...?
+- What alternatives did you consider to OCRing the web pages? What about downloading webpage html, PDFs or full-text from APIs? 
 - Why do missing articles need to be manually added to the DB? 
 - Why do search results need to be delivered by email? Would a web viewer tool be more useful? (I'm thinking Elasticsearch )
 - Maintaining an up-to-date list of relevant potential author names (and department information) would be key to getting good results in the search step. If there's already a database (CORUM?) of users, that's great, but that adds complexity of interfacing with the system database. What would be the simplest thing we could do that would work? 

@@ -198,9 +198,13 @@ Downloading 24 of 25
 GOOD ONE
 Transcribing now...
 ```
+4. I played around with some different ways of querying the API with the following notes: 
+- Tried doing the same query I had used in the script on https://pubmed.ncbi.nlm.nih.gov/advanced/. This is how I noticed the data format I started with was wrong.
+- Updated the API query to return a CSV. This is useful and the results match what the web tool returns. Worth noting that article titles sometimes get truncated in the API results, but not in the web results.
+- You can run searches on the command line with https://www.ncbi.nlm.nih.gov/books/NBK179288/ like `$ esearch -db pubmed -query "University of Massachusetts Amherst[AFFL]" -mindate "2024/05/01" -maxdate "2024/06/01"`, which is good for testing number of results.
 
 ## Searcher Notes
-
+I didn't try running this, because I don't have files to reference potential author names. Looking through the file, there are some efficiency improvements around sorting and I have some questions on the scoring. 
 
 
 ## Questions
@@ -210,6 +214,7 @@ Transcribing now...
 - Why is the data.txt input to the TheScraper.py generated manually? What did does it contain and how does that data contribute to the rest of the scraper's behaviour? Why does the code read the whole file but only use the last line for creating the query?
 - How certain are we about the search query formulation? Is it getting the results that you want? What is "town" providing in the search query string? Actually trying out the query on https://pubmed.ncbi.nlm.nih.gov/advanced/ would be helpful. 
     -  You can use the advanced search options on https://pubmed.ncbi.nlm.nih.gov/advanced/ to build queries. For example, search for "Affiliation=University of Massachusetts Amherst" With a publication date of 6/1/2023-6/1/2024 gives `https://pubmed.ncbi.nlm.nih.gov/?term=%28%28%222023%2F06%2F01%22%5BDate+-+Publication%5D+%3A+%222024%2F06%2F01%22%5BDate+-+Publication%5D%29%29+AND+%28University+of+Massachusetts+Amherst%5BAffiliation%5D%29&sort=`. This is useful for testing, especially since the API isn't well documented. You can use a tool like https://text.makeup to decode the URL string to be more readable and the python urlparse library to encode. 
+    - Note that by changing the existing search to     f'(("{startdate}":"{enddate}"[dp])AND(University+of+Massachusetts+Amherst[ad]))'
 - What's the importance of obtaining the full text? Scraping screenshots to OCR seems more unreliable than trying to grab full text via HTML or even PDFs directly from PubMed when available. Many publishers (Wiley) are using the "Verify you are human" checkboxes or other pop ups that block scrapers.
 - Keyword counting: 
     - Since you're using the string.count(keyword) method for counting the number of times a term appears in a document, you'll count terms even when they're sub-parts of another word (e.g. "cat" will be counted even if only the word "category" appears in text). Do you want full word matches or 
@@ -229,3 +234,8 @@ Transcribing now...
 - [ ] Speed up processing code using pandas (and maybe dask) to work with dataframes (up-sides: multiprocessing, computational efficiency, more checks on data formatting, standardized CSV formats, downsides: future maintainers will need to know pandas)
 
 
+# References 
+- https://www.ncbi.nlm.nih.gov/books/NBK25499/
+- Handy command line tool for testing queries https://www.ncbi.nlm.nih.gov/books/NBK179288/
+- Expert search tips from Johns Hopkins https://browse.welch.jhmi.edu/searching/pubmed-search-tips
+- PubMed format tags are at the very bottom https://pubmed.ncbi.nlm.nih.gov/help/#automatic-term-mapping

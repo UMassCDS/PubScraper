@@ -19,11 +19,10 @@ import re
 import shutil
 import tempfile
 import time
-import urllib
-
 
 import cv2
 import imutils
+import pandas as pd
 from pymed import PubMed
 from pytesseract import pytesseract
 from selenium import webdriver
@@ -40,8 +39,10 @@ def search(search_term, max_result):
     results = pubmed.query(search_term, max_results=max_result)
     articleList = []
     articleInfo = {}
+    article_records = []
     for article in results:
         articleDict = article.toDict()
+        article_records.append(articleDict)
         if articleDict["doi"] is None:
             continue
         articleList.append(articleDict)
@@ -51,7 +52,8 @@ def search(search_term, max_result):
     for paper in articleList:
         currentDOI = paper["doi"].split("\n")[0]
         pubmedDOI_list.append(currentDOI)
-    return articleInfo, pubmedDOI_list, len(pubmedDOI_list)
+    articles_df = pd.DataFrame.from_records(article_records)
+    return articleInfo, pubmedDOI_list, len(pubmedDOI_list), articles_df
 
 
 # use selenium to visit doi.org website and grab snapshots as bot scrolls through manuscript
@@ -272,10 +274,10 @@ for folder_name in folder_names:
 #     reader = csv.reader(f, delimiter="|")
 #     terms = list(reader)
 
-# How does date range need to be formated? -VP
-# ADDED BY VIRGINIA FOR TESTING, can be removed later:
-startdate = "2024-05-01"
-enddate = "2024-06-01"
+# Note that dates MUST be in YYYY/MM/DD, YYYY or YYYY/MM format, see https://www.ncbi.nlm.nih.gov/books/NBK25499/ for reference -VP
+# HARD CODED BY VIRGINIA FOR TESTING, can be removed later: -VP
+startdate = "2024/05/01"
+enddate = "2024/06/01"
 affiliation = "University of Massachusetts Amherst"
 town = "Amherst"
 
@@ -283,15 +285,21 @@ town = "Amherst"
 daterange = startdate + ":" + enddate
 print("DATE: ", daterange)
 
-# TODO Probably urllib.parse.quote_plus should be used here instead of regex -VP
+# Note that I tried using the urllib.parse functionality to encode the url, but it doesn't work, so
 # >>> re.sub("[^0-9a-zA-Z]+", "+", "University of Massachusetts")
 #'University+of+Massachusetts'
-affiliation = re.sub("[^0-9a-zA-Z]+", "+", affiliation)
+# affiliation = re.sub("[^0-9a-zA-Z]+", "+", affiliation)
 print("AFFL: ", affiliation)
-search_query = f"{affiliation}+[ad]+{town}+[ad]+{daterange}+[dp]"
+# search_query = f"{affiliation}+[ad]+{town}+[ad]+{daterange}+[dp]"
+raw_query = f"({daterange}[DP])AND({affiliation}[AD])"
+search_query = re.sub(r"\s+", "+", raw_query)
+
+
 print("SRCH: ", search_query)
 # This is only searching for the last affiliation that appeared in the last row of the CSV file. Is that intentional? -VP
-candidates, candidates_doi, no_of_candidates = search(search_query, 100000)
+candidates, candidates_doi, no_of_candidates, articles_df = search(search_query, 100000)
+
+articles_df.to_csv("pubmed_search_results.csv", index=False)
 end = no_of_candidates
 
 # TODO Could use tqdm for showing progress
@@ -299,28 +307,29 @@ end = no_of_candidates
 for i in range(end):
     try:
         a1, a2, auths = generate_citation(candidates, candidates_doi[i])
-        print("Downloading", i + 1, "of", end + 1)
-        download(candidates_doi[i], f"img_results/{i}file.png")
-        image_height = cv2.imread(f"img_results/{i}file.png").shape[0]
-        if (
-            image_height < 8000
-        ):  # these are manuscripts that were PROBABLY not successful
-            print("SHORTY")
-            with open("annual.txt", "a") as f:
-                f.write(f"{i}|shorty-download|{a1}")
-            print("Transcribing now...")
-            generateText(i)
-            path = os.getcwd()
-            path = os.path.join(path, "text_results", f"{i}text_output.txt")
-        else:
-            print("GOOD ONE")
-            with open("annual.txt", "a") as f:
-                f.write(f"{i}|sucess-download|{a1}")
-            print("Transcribing now...")
-            generateText(i)
-            path = os.getcwd()
-            path = os.path.join(path, "text_results", f"{i}text_output.txt")
+        # print("Downloading", i + 1, "of", end)
+        raise KeyError
+        # download(candidates_doi[i], f"img_results/{i}file.png")
+        # image_height = cv2.imread(f"img_results/{i}file.png").shape[0]
+        # if (
+        #     image_height < 8000
+        # ):  # these are manuscripts that were PROBABLY not successful
+        #     print("SHORTY")
+        #     with open("annual.txt", "a") as f:
+        #         f.write(f"{i}|shorty-download|{a1}")
+        #     print("Transcribing now...")
+        #     generateText(i)
+        #     path = os.getcwd()
+        #     path = os.path.join(path, "text_results", f"{i}text_output.txt")
+        # else:
+        #     print("GOOD ONE")
+        #     with open("annual.txt", "a") as f:
+        #         f.write(f"{i}|sucess-download|{a1}")
+        #     print("Transcribing now...")
+        #     generateText(i)
+        #     path = os.getcwd()
+        #     path = os.path.join(path, "text_results", f"{i}text_output.txt")
     except Exception as e:  # these are manuscripts that were certainly not successful
-        print("ERROR", e)
+        # print("ERROR", e)
         with open("annual.txt", "a") as f:
             f.write(f"{i}|failed-download|{a1}")

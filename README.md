@@ -210,16 +210,17 @@ I didn't try running this, because I don't have files to reference potential aut
 
 ## Questions
 - Why use Selenium -> screenshot -> OCR, rather than text retrieval from the PubMed APIs?
+    - What's the importance of obtaining the full text? Scraping screenshots to OCR seems more unreliable than trying to grab full text via HTML or even PDFs directly from PubMed when available. Many publishers (Wiley) are using the "Verify you are human" checkboxes or other pop ups that block scrapers.
 - What dashboard or data browsing tools are the end-users most comfortable with? (CSV, Excel, SQL? what about Elasticsearch or Tableau?) Did you consider using a database (SQL) or search index system (Elasticsearch)? Why or why not?  
 - Did you run into any challenges or limitations with using the PubMed APIs? (Some of their guidelines seem fairly restrictive, see https://www.ncbi.nlm.nih.gov/pmc/tools/oai/)
 - Why is the data.txt input to the TheScraper.py generated manually? What did does it contain and how does that data contribute to the rest of the scraper's behaviour? Why does the code read the whole file but only use the last line for creating the query?
 - How certain are we about the search query formulation? Is it getting the results that you want? What is "town" providing in the search query string? Actually trying out the query on https://pubmed.ncbi.nlm.nih.gov/advanced/ would be helpful. 
     -  You can use the advanced search options on https://pubmed.ncbi.nlm.nih.gov/advanced/ to build queries. For example, search for "Affiliation=University of Massachusetts Amherst" With a publication date of 6/1/2023-6/1/2024 gives `https://pubmed.ncbi.nlm.nih.gov/?term=%28%28%222023%2F06%2F01%22%5BDate+-+Publication%5D+%3A+%222024%2F06%2F01%22%5BDate+-+Publication%5D%29%29+AND+%28University+of+Massachusetts+Amherst%5BAffiliation%5D%29&sort=`. This is useful for testing, especially since the API isn't well documented. You can use a tool like https://text.makeup to decode the URL string to be more readable and the python urlparse library to encode. 
     - Note that by changing the existing search to `f'(("{startdate}":"{enddate}"[dp])AND(University+of+Massachusetts+Amherst[ad]))'` I get the same number of results as the original search query with town.
-- What's the importance of obtaining the full text? Scraping screenshots to OCR seems more unreliable than trying to grab full text via HTML or even PDFs directly from PubMed when available. Many publishers (Wiley) are using the "Verify you are human" checkboxes or other pop ups that block scrapers.
 - Keyword counting: 
     - Since you're using the string.count(keyword) method for counting the number of times a term appears in a document, you'll count terms even when they're sub-parts of another word (e.g. "cat" will be counted even if only the word "category" appears in text). Do you want full word matches or is this potential inaccuracy okay? 
-    - Why take a specific set of keywords as input? What happens if you want to add a new keyword later?
+    - Why take a specific set of keywords as input? What's the purpose of using custom keywords? 
+    - What happens if you want to add a new keyword later?
     - Key terms: Why not use the [MeSH](https://www.nlm.nih.gov/mesh/meshhome.html) terms from each PubMed paper? 
 - Keyword scoring: 
     - Why multiply by 100? 

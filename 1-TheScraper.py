@@ -12,15 +12,26 @@
 ##  2) catch all citations with authors and all PMID stuff into a file or text files
 ##  3) download and OCR all that it can
 
-import os, csv, shutil, re, tempfile, math, cv2, imutils, time, random
+import math
+import os
+import random
+import re
+import shutil
+import tempfile
+import time
+import urllib
+
+
+import cv2
+import imutils
 from pymed import PubMed
+from pytesseract import pytesseract
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from skimage.metrics import structural_similarity
-from pytesseract import pytesseract
 
 
 # main search tool that makes use of the pymed library and the PubMed API
@@ -231,30 +242,38 @@ for folder_name in folder_names:
     os.mkdir(folder_name)
 
 
-with open(
-    "data.txt", "r"
-) as f:  # this file should be created from a webform or manually - csv file with needed info (but also some leftover junk that can be pruned)
-    reader = csv.reader(f, delimiter="|")
-    for row in reader:
-        subname = row[0]
-        subemail = row[1]
-        orcid = row[2]
-        affiliation = row[3]
-        town = row[4]
-        supwords = row[5]
-        startdate = row[6]
-        enddate = row[7]
-        reqterms = row[8]
+# with open(
+#     "data.txt", "r"
+# ) as f:  # this file should be created from a webform or manually - csv file with needed info (but also some leftover junk that can be pruned)
+#     reader = csv.reader(f, delimiter="|")
+#     for row in reader:
+#         subname = row[0]
+#         subemail = row[1]
+#         orcid = row[2]
+#         affiliation = row[3]
+#         town = row[4]
+#         supwords = row[5]
+#         startdate = row[6]
+#         enddate = row[7]
+#         reqterms = row[8]
 
-# The terms variable is unused, so this block can be removed -VP
-with open("data.txt", "r") as f:
-    reader = csv.reader(f, delimiter="|")
-    terms = list(reader)
+# # The terms variable is unused, so this block can be removed -VP
+# with open("data.txt", "r") as f:
+#     reader = csv.reader(f, delimiter="|")
+#     terms = list(reader)
+
+# How does date range need to be formated? -VP
+# ADDED BY VIRGINIA FOR TESTING, can be removed later:
+startdate = "2024-05-01"
+enddate = "2024-06-01"
+affiliation = "University of Massachusetts Amherst"
+town = "Amherst"
+
 
 daterange = startdate + ":" + enddate
 print("DATE: ", daterange)
 
-# TODO Probably urllib.parse should be used here instead of regex -VP
+# TODO Probably urllib.parse.quote_plus should be used here instead of regex -VP
 # >>> re.sub("[^0-9a-zA-Z]+", "+", "University of Massachusetts")
 #'University+of+Massachusetts'
 affiliation = re.sub("[^0-9a-zA-Z]+", "+", affiliation)
@@ -263,15 +282,14 @@ search_query = f"{affiliation}+[ad]+{town}+[ad]+{daterange}+[dp]"
 print("SRCH: ", search_query)
 # This is only searching for the last affiliation that appeared in the last row of the CSV file. Is that intentional? -VP
 candidates, candidates_doi, no_of_candidates = search(search_query, 100000)
-start = 1
 end = no_of_candidates
-realend = no_of_candidates - 1
 
+# TODO Could use tqdm for showing progress
 # Judge manuscript qualtiy based on stitched screenshot length
-for i in range(start - 1, end):
+for i in range(end):
     try:
         a1, a2, auths = generate_citation(candidates, candidates_doi[i])
-        print("Downloading", i, "of", realend)
+        print("Downloading", i + 1, "of", end + 1)
         download(candidates_doi[i], f"img_results/{i}file.png")
         image_height = cv2.imread(f"img_results/{i}file.png").shape[0]
         if (

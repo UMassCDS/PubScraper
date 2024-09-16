@@ -77,7 +77,7 @@ $ grep -in "open(" *.py
 4. Made some notes in code or and minor code improvements. 
  - don't need f.close() if you're using the file 'with open(...)` convention
  - Ruff linter suggestions (remove unused imports, bare exceptions)
-5. Hard coded dates, affiliation and town and rand the scraper as follows:
+5. Hard coded dates, affiliation and town and ran the scraper as follows:
 ```
 $ python 1-TheScraper.py 
 DATE:  2024-05-01:2024-06-01

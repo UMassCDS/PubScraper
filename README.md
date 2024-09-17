@@ -200,7 +200,7 @@ GOOD ONE
 Transcribing now...
 ```
 4. I played around with some different ways of querying the API with the following notes: 
-- Tried doing the same query I had used in the script on https://pubmed.ncbi.nlm.nih.gov/advanced/. This is how I noticed the data format I started with was wrong.
+- Tried doing the same query I had used in the script on https://pubmed.ncbi.nlm.nih.gov/advanced/. This is how I noticed the date format I started with was wrong.
 - Updated the API query to return a CSV. This is useful and the results match what the web tool returns. Worth noting that article titles sometimes get truncated in the API results, but not in the web results.
 - You can run searches on the command line with https://www.ncbi.nlm.nih.gov/books/NBK179288/ like `$ esearch -db pubmed -query "University of Massachusetts Amherst[AFFL]" -mindate "2024/05/01" -maxdate "2024/06/01"`, which is good for testing number of results.
 

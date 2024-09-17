@@ -37,7 +37,7 @@
 - Ability – as it is probably obvious, my coding is awful and I have relied a lot of stackexchange and ChatGPT to help solve tiny tasks in my python
 
 ### Virginia follow up questions
-- Why not use Semantic Scholar's API as opposed to PubMed (difficult to use) or Google Scholar (paid/closed)? We can apply for access and see if it's approved.
+- Why not use Semantic Scholar's API as opposed to PubMed (difficult to use) or Google Scholar (paid/closed)? We can apply for access and see if it's approved. 
 - What value are the keywords adding to your analysis. Could we obtain the same value from MeSH keyword terms, summaries, etc...?
 - What alternatives did you consider to OCRing the web pages? What about downloading webpage html, PDFs or full-text from APIs? 
 - Why do missing articles need to be manually added to the DB? 
@@ -211,6 +211,7 @@ I didn't try running this, because I don't have files to reference potential aut
 ## Questions
 - Why use Selenium -> screenshot -> OCR, rather than text retrieval from the PubMed APIs?
     - What's the importance of obtaining the full text? Scraping screenshots to OCR seems more unreliable than trying to grab full text via HTML or even PDFs directly from PubMed when available. Many publishers (Wiley) are using the "Verify you are human" checkboxes or other pop ups that block scrapers.
+    - Is there an option to download the articles from the UMass library? There is some relevant information at https://guides.library.umass.edu/scholarworks and the library is starting to use [OpenPublishing](https://openpublishing.com/en/home-2/), which has [API access with minimal documentation](https://developer.openpublishing.com/).
 - What dashboard or data browsing tools are the end-users most comfortable with? (CSV, Excel, SQL? what about Elasticsearch or Tableau?) Did you consider using a database (SQL) or search index system (Elasticsearch)? Why or why not?  
 - Did you run into any challenges or limitations with using the PubMed APIs? (Some of their guidelines seem fairly restrictive, see https://www.ncbi.nlm.nih.gov/pmc/tools/oai/)
 - Why is the data.txt input to the TheScraper.py generated manually? What did does it contain and how does that data contribute to the rest of the scraper's behaviour? Why does the code read the whole file but only use the last line for creating the query?
